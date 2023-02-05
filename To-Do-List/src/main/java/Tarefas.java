@@ -121,8 +121,9 @@ public class Tarefas {
         return localDate;
     }
 
-    void editarTarefa() {
-        Tarefas tarefa = BuscaTarefa();
+    void EditarTarefa(Tarefas tarefa) {
+
+
         System.out.println("Escolha uma opção:");
         System.out.println("1. Nome");
         System.out.println("2. Descrição");
@@ -134,21 +135,47 @@ public class Tarefas {
 
         switch (choice) {
             case 1:
-                System.out.println("Qual o nome da tarefa:");
+                System.out.println("Renomei a tarefa: ");
                 String nome = input.next();
                 tarefa.setNome(nome);
                 break;
             case 2:
-                System.out.println("Você escolheu a opção 2");
+                System.out.println("Reescreva a descrição: ");
+                String descricao = input.next();
+                tarefa.setDescricao(descricao);
                 break;
             case 3:
-                System.out.println("Você escolheu a opção 3");
+                System.out.println("Qual a nova data: ");
+                String data = input.next();
+                tarefa.setDataTermino(ConversorStringData(data));
                 break;
             case 4:
-                System.out.println("Você escolheu a opção 4");
+                System.out.println("Qual o nove nivel de prioridade(1-5): ");
+                int prioridade = input.nextInt();
+                tarefa.setPrioridade(prioridade);
                 break;
             case 5:
-                System.out.println("Você escolheu a opção 5");
+                System.out.println("Qual o novo status: ");
+                System.out.println("1. A fazer");
+                System.out.println("2. Fazendo");
+                System.out.println("3. Feita");
+                System.out.print("Sua escolha: ");
+                int choiceStatus = input.nextInt();
+
+                switch (choiceStatus){
+                    case 1:
+                        status.ToDo();
+                        break;
+                    case 2:
+                        status.Doing();
+                        break;
+                    case 3:
+                        status.Done();
+                        break;
+                    default:
+                        System.out.println("Opção inválida");
+                }
+
                 break;
             default:
                 System.out.println("Opção inválida");
@@ -157,11 +184,31 @@ public class Tarefas {
         }
 
     }
-    Tarefas BuscaTarefa (Tarefas tarefa) {
-
-        if(listaTarefas.contains(tarefa))
-        return tarefa;
+    Tarefas BuscaTarefa (String nomeTarefa) {
+        String mensagemErro = "Não foi possivel encontra a tarefa que você busca";
+        for (Tarefas tarefa : listaTarefas) {
+            if (tarefa.getNome().equals(nomeTarefa)) {
+                return tarefa;
+            }else System.out.println(mensagemErro);
+        }
+        return null;
     }
+    void ExcluirTarefa(Tarefas tarefas){
+        if(listaTarefas.contains(tarefas)) {
+            listaTarefas.remove(tarefas);
+            System.out.println("Tarefa removida com sucesso");
+        }else System.out.println("não foi possivel encontrar a tarefa");
+
+    }
+    void MostrarListaDeTarefas(){
+        for (Tarefas tarefa : listaTarefas) {
+            System.out.println(tarefa);
+
+        }
+    }
+
+
+
 }
 
 
